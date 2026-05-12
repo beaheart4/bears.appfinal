@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicago Bears — 2024 Season Stats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1F41;--navy2:#132a57;
+  --orange:#C83803;--orange2:#e04408;
+  --bg:#f7f6f3;--surface:#ffffff;
+  --text:#111827;--muted:#6b7280;--border:#e5e7eb;
+}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2,h3{font-family:'Barlow Condensed',sans-serif}
+
+/* HEADER */
+header{background:var(--navy);padding:0 1.5rem}
+.hdr{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1.25rem;padding:1.25rem 0}
+.logo{width:50px;height:50px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.hdr h1{font-size:26px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;line-height:1}
+.hdr p{font-size:12px;color:#8898b0;margin-top:3px;letter-spacing:0.3px}
+
+/* NAV */
+nav{background:var(--navy);padding:0 1.5rem;position:sticky;top:0;z-index:100;border-top:1px solid rgba(255,255,255,0.06);box-shadow:0 3px 16px rgba(0,0,0,.35)}
+.nav{max-width:1100px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nb{padding:13px 18px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;border:none;background:none;color:#7a8fa8;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:0;white-space:nowrap;transition:color .15s,border-color .15s}
+.nb:hover{color:#fff}
+.nb.on{color:#fff;border-bottom-color:var(--orange)}
+
+/* MAIN */
+main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
+
+/* PANELS */
+.pnl{display:none}.pnl.on{display:block}
+
+/* SUMMARY CARDS */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.75rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;position:relative;overflow:hidden}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--orange)}
+.cl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.cv{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:700;color:var(--navy);line-height:1}
+.cn{font-size:13px;font-weight:500;color:var(--text);margin-top:4px}
+.cs{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* CHARTS */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.chart-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.chart-box h2{font-size:15px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1rem}
+.hbar{margin-bottom:9px}
+.hb-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.hb-name{font-weight:500;color:var(--text)}
+.hb-val{color:var(--muted)}
+.hb-track{height:7px;background:#eee;border-radius:4px;overflow:hidden}
+.hb-fill{height:100%;border-radius:4px;background:var(--orange);transition:width .5s}
+
+/* TABLES */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.25rem}
+.tbl-head{padding:.9rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.tbl-head h2{font-size:16px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px}
+.tbl-head span{font-size:12px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#f9fafb;padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+th.r,td.r{text-align:right}
+tbody tr{border-bottom:1px solid #f3f4f6;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fef6f2}
+td{padding:10px 14px;white-space:nowrap}
+.pname{font-weight:600;color:var(--navy)}
+.hi{color:var(--navy);font-weight:600}
+.dim{color:var(--muted);font-variant-numeric:tabular-nums}
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.4px}
+.b-o{background:#FEF3EB;color:#c03;border:1px solid #fcd5b3}
+.b-d{background:#EAF3DE;color:#3B6D11;border:1px solid #c0dd97}
+
+/* BAR IN TABLE */
+.bar-c{display:flex;align-items:center;gap:8px;min-width:90px}
+.bar-bg{flex:1;height:5px;background:#eee;border-radius:3px;overflow:hidden}
+.bar-f{height:100%;border-radius:3px;background:var(--orange)}
+
+/* ROSTER */
+.pos-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.pb{padding:5px 13px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s}
+.pb:hover{border-color:var(--orange);color:var(--orange)}
+.pb.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.pos-dropdown{margin-bottom:1.25rem;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);font-family:inherit;font-size:14px;cursor:pointer}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.rcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;transition:box-shadow .15s,transform .15s;cursor:default}
+.rcard:hover{box-shadow:0 4px 18px rgba(0,0,0,.09);transform:translateY(-2px)}
+.rc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.rc-num{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--orange)}
+.rc-pos{font-size:10px;font-weight:700;background:var(--navy);color:#fff;padding:2px 7px;border-radius:4px;letter-spacing:.4px}
+.rc-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:3px;line-height:1.2}
+.rc-col{font-size:11px;color:var(--muted);margin-bottom:6px}
+.rc-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:10px;background:#f3f4f6;color:var(--muted);padding:2px 6px;border-radius:4px}
+
+/* TWO COL */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* FG */
+.fg-good{color:#15803d;font-weight:600}
+
+@media(max-width:760px){
+  .cards{grid-template-columns:1fr 1fr}
+  .charts{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+  .nb{padding:12px 13px;font-size:13px}
+  main{padding:1rem}
+}
+@media(max-width:480px){
+  .cards{grid-template-columns:1fr 1fr}
+  .hdr h1{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <div class="logo">🐻</div>
+    <div>
+      <h1>Chicago Bears</h1>
+      <p>2024 Season Statistics</p>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav">
+    <button class="nb on" onclick="show('overview',this)">Overview</button>
+    <button class="nb" onclick="show('passing',this)">Passing</button>
+    <button class="nb" onclick="show('rushing',this)">Rushing</button>
+    <button class="nb" onclick="show('receiving',this)">Receiving</button>
+    <button class="nb" onclick="show('defense',this)">Defense</button>
+    <button class="nb" onclick="show('special',this)">Special Teams</button>
+    <button class="nb" onclick="show('roster',this)">Roster</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <div id="overview" class="pnl on">
+    <div class="cards">
+      <div class="card">
+        <div class="cl">Passing Yards</div>
+        <div class="cv">3,942</div>
+        <div class="cn">Caleb Williams</div>
+        <div class="cs">27 TD · 7 INT · 90.1 RTG</div>
+      </div>
+      <div class="card">
+        <div class="cl">Rushing Yards</div>
+        <div class="cv">1,087</div>
+        <div class="cn">D'Andre Swift</div>
+        <div class="cs">9 TD · 4.9 YPC · 223 ATT</div>
+      </div>
+      <div class="card">
+        <div class="cl">Receiving Yards</div>
+        <div class="cv">713</div>
+        <div class="cn">Colston Loveland</div>
+        <div class="cs">6 TD · 58 REC · 12.3 AVG</div>
+      </div>
+      <div class="card">
+        <div class="cl">Tackles Leader</div>
+        <div class="cv">112</div>
+        <div class="cn">Tremaine Edmunds</div>
+        <div class="cs">61 solo · 51 asst · 1.0 sck</div>
+      </div>
+    </div>
+    <div class="charts">
+      <div class="chart-box">
+        <h2>Rushing Yards Leaders</h2>
+        <div id="rushChart"></div>
+      </div>
+      <div class="chart-box">
+        <h2>Receiving Yards Leaders</h2>
+        <div id="recChart"></div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <h2>Tackles Leaders</h2>
+      <div id="tackleChart"></div>
+    </div>
+  </div>
+
+  <!-- PASSING -->
+  <div id="passing" class="pnl">
+    <div class="tbl-wrap">
+      <div class="tbl-head"><h2>Passing Stats</h2><span>2024 Season</span></div>
+      <table>
+        <thead><tr>
+          <th>Player</th><th class="r">ATT</th><th class="r">COMP</th><th class="r">YDS</th>
+          <th class="r">PCT</th><th class="r">YPA</th><th class="r">TD</th>
+          <th class="r">INT</th><th class="r">SCK</th><th class="r">RATE</th>
+        </tr></thead>
+        <tbody id="passTbl"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RUSHING -->
+  <div id="rushing" class="pnl">
+    <div class="tbl-wrap">
+      <div class="tbl-head"><h2>Rushing Stats</h2><span>2024 Season</span></div>
+      <table>
+        <thead><tr>
+          <th>Player</th><th class="r">ATT</th><th class="r">YDS</th>
+          <th class="r">AVG</th><th class="r">LONG</th><th class="r">TD</th><th>Yards</th>
+        </tr></thead>
+        <tbody id="rushTbl"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RECEIVING -->
+  <div id="receiving" class="pnl">
+    <div class="tbl-wrap">
+      <div class="tbl-head"><h2>Receiving Stats</h2><span>2024 Season</span></div>
+      <table>
+        <thead><tr>
+          <th>Player</th><th class="r">REC</th><th class="r">YDS</th>
+          <th class="r">AVG</th><th class="r">LONG</th><th class="r">TD</th><th>Yards</th>
+        </tr></thead>
+        <tbody id="recTbl"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DEFENSE -->
+  <div id="defense" class="pnl">
+    <div class="tbl-wrap">
+      <div class="tbl-head"><h2>Tackles</h2><span>2024 Season</span></div>
+      <table>
+        <thead><tr>
+          <th>Player</th><th class="r">TOTAL</th><th class="r">SOLO</th>
+          <th class="r">ASST</th><th class="r">SCK</th><th class="r">FF</th><th>Total Tackles</th>
+        </tr></thead>
+        <tbody id="tackTbl"></tbody>
+      </table>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tbl-head"><h2>Interceptions</h2><span>2024 Season</span></div>
+      <table>
+        <thead><tr>
+          <th>Player</th><th class="r">INT</th><th class="r">YDS</th>
+          <th class="r">AVG</th><th class="r">LONG</th><th class="r">TD</th>
+        </tr></thead>
+        <tbody id="intTbl"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SPECIAL TEAMS -->
+  <div id="special" class="pnl">
+    <div class="two" style="margin-bottom:1rem">
+      <div class="tbl-wrap" style="margin-bottom:0">
+        <div class="tbl-head"><h2>Field Goals</h2><span>Cairo Santos</span></div>
+        <table>
+          <thead><tr>
+            <th>Range</th><th class="r">Made–Att</th><th class="r">%</th><th>Chart</th>
+          </tr></thead>
+          <tbody id="fgTbl"></tbody>
+        </table>
+      </div>
+      <div class="tbl-wrap" style="margin-bottom:0">
+        <div class="tbl-head"><h2>Punting</h2><span>Tory Taylor</span></div>
+        <table>
+          <thead><tr>
+            <th>Player</th><th class="r">PUNTS</th><th class="r">AVG</th>
+            <th class="r">LONG</th><th class="r">IN 20</th><th class="r">NET</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td class="pname">Tory Taylor</td>
+              <td class="r dim">60</td><td class="r hi">47.8</td>
+              <td class="r dim">69</td><td class="r dim">21</td><td class="r dim">40.4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tbl-head"><h2>Kick Returns</h2><span>2024 Season</span></div>
+      <table>
+        <thead><tr>
+          <th>Player</th><th class="r">RET</th><th class="r">YDS</th>
+          <th class="r">AVG</th><th class="r">LONG</th><th class="r">TD</th>
+        </tr></thead>
+        <tbody id="krTbl"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ROSTER -->
+  <div id="roster" class="pnl">
+    <select id="posSelect" onchange="filterPos(this.value)" class="pos-dropdown"></select>
+    <div class="rgrid" id="rosterGrid"></div>
+  </div>
+
+</main>
+
+<script>
+const D = {"roster":[{"id":7,"name":"Garrett Bradbury","number":null,"position":"C","height":"6-3","weight":305,"age":30,"experience":8,"college":"N.C. State"},{"id":39,"name":"Cam Lewis","number":null,"position":"DB","height":"5-9","weight":183,"age":28,"experience":7,"college":"Buffalo"},{"id":9,"name":"Coby Bryant","number":null,"position":"DB","height":"6-1","weight":193,"age":26,"experience":5,"college":"Cincinnati"},{"id":16,"name":"Dallis Flowers","number":"37","position":"DB","height":"6-1","weight":196,"age":28,"experience":4,"college":"Pittsburg State (KS)"},{"id":42,"name":"Dontae Manning","number":"27","position":"DB","height":"5-10","weight":190,"age":24,"experience":1,"college":"Oregon"},{"id":25,"name":"Elijah Hicks","number":"22","position":"DB","height":"5-11","weight":204,"age":26,"experience":5,"college":"California"},{"id":49,"name":"Gervarrius Owens","number":"30","position":"DB","height":"6-0","weight":200,"age":26,"experience":2,"college":"Houston"},{"id":31,"name":"Jaylon Johnson","number":"1","position":"DB","height":"6-0","weight":195,"age":26,"experience":7,"college":"Utah"},{"id":34,"name":"Jaylon Jones","number":"33","position":"DB","height":"5-11","weight":190,"age":28,"experience":5,"college":"Mississippi"},{"id":5,"name":"Josh Blackwell","number":"39","position":"DB","height":"5-11","weight":179,"age":26,"experience":5,"college":"Duke"},{"id":20,"name":"Kyler Gordon","number":"6","position":"DB","height":"5-11","weight":200,"age":26,"experience":5,"college":"Washington"},{"id":56,"name":"Terell Smith","number":"32","position":"DB","height":"6-0","weight":204,"age":26,"experience":4,"college":"Minnesota"},{"id":57,"name":"Tyrique Stevenson","number":"29","position":"DB","height":"6-0","weight":212,"age":25,"experience":4,"college":"Miami"},{"id":17,"name":"Zah Frazier","number":"35","position":"DB","height":"6-3","weight":186,"age":25,"experience":1,"college":"Texas-San Antonio"},{"id":6,"name":"Austin Booker","number":"94","position":"DL","height":"6-6","weight":245,"age":23,"experience":3,"college":"Kansas"},{"id":23,"name":"Daniel Hardy","number":"92","position":"DL","height":"6-2","weight":255,"age":27,"experience":4,"college":"Montana State"},{"id":47,"name":"Dayo Odeyingbo","number":"55","position":"DL","height":"6-5","weight":282,"age":26,"experience":6,"college":"Vanderbilt"},{"id":13,"name":"Gervon Dexter Sr.","number":"99","position":"DL","height":"6-6","weight":326,"age":25,"experience":4,"college":"Florida"},{"id":30,"name":"Grady Jarrett","number":"50","position":"DL","height":"6-1","weight":294,"age":32,"experience":12,"college":"Clemson"},{"id":41,"name":"James Lynch","number":null,"position":"DL","height":"6-4","weight":289,"age":27,"experience":7,"college":"Baylor"},{"id":38,"name":"Jamree Kromah","number":"59","position":"DL","height":"6-3","weight":268,"age":25,"experience":1,"college":"James Madison"},{"id":43,"name":"Jeremiah Martin","number":"69","position":"DL","height":"6-4","weight":267,"age":25,"experience":1,"college":"Washington"},{"id":19,"name":"Jonathan Garvin","number":"57","position":"DL","height":"6-4","weight":257,"age":26,"experience":4,"college":"Miami"},{"id":58,"name":"Kentavius Street","number":null,"position":"DL","height":"6-2","weight":287,"age":29,"experience":8,"college":"N.C. State"},{"id":59,"name":"Montez Sweat","number":"98","position":"DL","height":"6-6","weight":270,"age":29,"experience":8,"college":"Mississippi State"},{"id":18,"name":"Neville Gallimore","number":null,"position":"DL","height":"6-2","weight":307,"age":29,"experience":7,"college":"Oklahoma"},{"id":64,"name":"Shemar Turner","number":"95","position":"DL","height":"6-3","weight":293,"age":23,"experience":2,"college":"Texas A&M"},{"id":53,"name":"Cairo Santos","number":"8","position":"K","height":"5-8","weight":173,"age":34,"experience":13,"college":"Tulane"},{"id":28,"name":"D'Marco Jackson","number":"48","position":"LB","height":"6-1","weight":233,"age":27,"experience":5,"college":"Appalachian State"},{"id":11,"name":"Devin Bush","number":null,"position":"LB","height":"5-11","weight":234,"age":27,"experience":8,"college":"Michigan"},{"id":21,"name":"Dominique Hampton","number":null,"position":"LB","height":"6-3","weight":220,"age":25,"experience":2,"college":"Washington"},{"id":52,"name":"Jack Sanborn","number":null,"position":"LB","height":"6-2","weight":234,"age":25,"experience":5,"college":"Wisconsin"},{"id":54,"name":"Nephi Sewell","number":"96","position":"LB","height":"6-0","weight":228,"age":27,"experience":3,"college":"Utah"},{"id":55,"name":"Noah Sewell","number":"44","position":"LB","height":"6-1","weight":246,"age":23,"experience":4,"college":"Oregon"},{"id":26,"name":"Ruben Hyppolite II","number":"47","position":"LB","height":"6-0","weight":236,"age":24,"experience":2,"college":"Maryland"},{"id":14,"name":"T.J. Edwards","number":"53","position":"LB","height":"6-0","weight":228,"age":29,"experience":8,"college":"Wisconsin"},{"id":15,"name":"Luke Elkin","number":"43","position":"LS","height":"6-1","weight":235,"age":23,"experience":1,"college":"Iowa"},{"id":33,"name":"Braxton Jones","number":"70","position":"OL","height":"6-5","weight":303,"age":26,"experience":5,"college":"Southern Utah"},{"id":68,"name":"Darnell Wright","number":"58","position":"OL","height":"6-5","weight":325,"age":24,"experience":4,"college":"Tennessee"},{"id":67,"name":"Jedrick Wills Jr.","number":null,"position":"OL","height":"6-4","weight":312,"age":26,"experience":6,"college":"Alabama"},{"id":62,"name":"Joe Thuney","number":"62","position":"OL","height":"6-5","weight":301,"age":33,"experience":11,"college":"N.C. State"},{"id":29,"name":"Jonah Jackson","number":"73","position":"OL","height":"6-3","weight":319,"age":29,"experience":7,"college":"Ohio State"},{"id":44,"name":"Jordan McFadden","number":"74","position":"OL","height":"6-2","weight":306,"age":26,"experience":4,"college":"Clemson"},{"id":2,"name":"Kiran Amegadjie","number":"72","position":"OL","height":"6-5","weight":326,"age":24,"experience":3,"college":"Yale"},{"id":24,"name":"Kyle Hergel","number":"60","position":"OL","height":"6-2","weight":315,"age":26,"experience":2,"college":"Boston College"},{"id":46,"name":"Luke Newman","number":"65","position":"OL","height":"6-3","weight":308,"age":24,"experience":2,"college":"Michigan State"},{"id":63,"name":"Ozzy Trapilo","number":"75","position":"OL","height":"6-8","weight":312,"age":24,"experience":2,"college":"Boston College"},{"id":4,"name":"Theo Benedet","number":"79","position":"OL","height":"6-7","weight":304,"age":24,"experience":2,"college":"University of British Columbia"},{"id":61,"name":"Tory Taylor","number":"19","position":"P","height":"6-4","weight":225,"age":28,"experience":3,"college":"Iowa"},{"id":66,"name":"Caleb Williams","number":"18","position":"QB","height":"6-1","weight":226,"age":24,"experience":3,"college":"USC"},{"id":36,"name":"Case Keenum","number":"11","position":"QB","height":"6-1","weight":220,"age":38,"experience":14,"college":"Houston"},{"id":3,"name":"Tyson Bagent","number":"17","position":"QB","height":"6-3","weight":212,"age":25,"experience":4,"college":"Shepherd"},{"id":8,"name":"Brittain Brown","number":"38","position":"RB","height":"6-1","weight":205,"age":28,"experience":3,"college":"UCLA"},{"id":60,"name":"D'Andre Swift","number":"4","position":"RB","height":"5-8","weight":204,"age":27,"experience":7,"college":"Georgia"},{"id":22,"name":"Deion Hankins","number":"35","position":"RB","height":"5-11","weight":226,"age":25,"experience":2,"college":"Texas State-San Marcos"},{"id":45,"name":"Kyle Monangai","number":"25","position":"RB","height":"5-8","weight":207,"age":23,"experience":2,"college":"Rutgers"},{"id":32,"name":"Roschon Johnson","number":"23","position":"RB","height":"6-0","weight":227,"age":25,"experience":4,"college":"Texas"},{"id":37,"name":"Cole Kmet","number":"85","position":"TE","height":"6-6","weight":257,"age":27,"experience":7,"college":"Notre Dame"},{"id":40,"name":"Colston Loveland","number":"84","position":"TE","height":"6-6","weight":241,"age":21,"experience":2,"college":"Michigan"},{"id":35,"name":"Nikola Kalinic","number":"86","position":"TE","height":"6-4","weight":245,"age":29,"experience":2,"college":"York"},{"id":27,"name":"Qadir Ismail","number":"80","position":"TE","height":"6-6","weight":232,"age":26,"experience":1,"college":"Samford"},{"id":12,"name":"Stephen Carlson","number":"88","position":"TE","height":"6-4","weight":248,"age":29,"experience":4,"college":"Princeton"},{"id":51,"name":"JP Richardson","number":"83","position":"WR","height":"5-11","weight":192,"age":23,"experience":1,"college":"TCU"},{"id":65,"name":"Jahdae Walker","number":"20","position":"WR","height":"6-3","weight":206,"age":23,"experience":2,"college":"Texas A&M"},{"id":50,"name":"Kalif Raymond","number":null,"position":"WR","height":"5-9","weight":160,"age":31,"experience":10,"college":"Holy Cross"},{"id":10,"name":"Luther Burden III","number":"10","position":"WR","height":"6-0","weight":210,"age":22,"experience":2,"college":"Missouri"},{"id":1,"name":"Maurice Alexander","number":"13","position":"WR","height":"5-10","weight":173,"age":29,"experience":1,"college":"Florida International"},{"id":48,"name":"Rome Odunze","number":"15","position":"WR","height":"6-3","weight":214,"age":23,"experience":3,"college":"Washington"}],"passing":[{"player":"Caleb Williams","att":568,"comp":330,"yds":3942,"comp_pct":58.1,"yds_per_att":6.9,"td":27,"int_thrown":7,"sck":24,"rate":90.1},{"player":"Tyson Bagent","att":4,"comp":3,"yds":47,"comp_pct":75.0,"yds_per_att":11.8,"td":0,"int_thrown":0,"sck":0,"rate":113.5},{"player":"DJ Moore","att":1,"comp":1,"yds":2,"comp_pct":100.0,"yds_per_att":2.0,"td":1,"int_thrown":0,"sck":0,"rate":118.8},{"player":"Cole Kmet","att":1,"comp":0,"yds":0,"comp_pct":0.0,"yds_per_att":0.0,"td":0,"int_thrown":0,"sck":0,"rate":39.6}],"rushing":[{"player":"D'Andre Swift","att":223,"yds":1087,"yds_per_att":4.9,"long":25,"td":9},{"player":"Kyle Monangai","att":169,"yds":783,"yds_per_att":4.6,"long":39,"td":5},{"player":"Caleb Williams","att":77,"yds":388,"yds_per_att":5.0,"long":29,"td":3},{"player":"DJ Moore","att":15,"yds":79,"yds_per_att":5.3,"long":17,"td":1},{"player":"Luther Burden III","att":6,"yds":37,"yds_per_att":6.2,"long":15,"td":0},{"player":"Brittain Brown","att":5,"yds":37,"yds_per_att":7.4,"long":22,"td":1},{"player":"Olamide Zaccheaus","att":4,"yds":25,"yds_per_att":6.2,"long":12,"td":0},{"player":"Roschon Johnson","att":2,"yds":17,"yds_per_att":8.5,"long":11,"td":0},{"player":"Tyson Bagent","att":2,"yds":7,"yds_per_att":3.5,"long":7,"td":0},{"player":"Travis Homer","att":1,"yds":-2,"yds_per_att":-2.0,"long":-2,"td":0},{"player":"Colston Loveland","att":1,"yds":-2,"yds_per_att":-2.0,"long":-2,"td":0}],"receiving":[{"player":"Colston Loveland","rec":58,"yds":713,"yds_per_rec":12.3,"long":58,"td":6},{"player":"DJ Moore","rec":50,"yds":682,"yds_per_rec":13.6,"long":46,"td":6},{"player":"Rome Odunze","rec":44,"yds":661,"yds_per_rec":15.0,"long":37,"td":6},{"player":"Luther Burden III","rec":47,"yds":652,"yds_per_rec":13.9,"long":65,"td":2},{"player":"Cole Kmet","rec":30,"yds":347,"yds_per_rec":11.6,"long":31,"td":2},{"player":"Olamide Zaccheaus","rec":39,"yds":313,"yds_per_rec":8.0,"long":27,"td":2},{"player":"D'Andre Swift","rec":34,"yds":299,"yds_per_rec":8.8,"long":55,"td":1},{"player":"Kyle Monangai","rec":18,"yds":164,"yds_per_rec":9.1,"long":34,"td":0},{"player":"Jahdae Walker","rec":6,"yds":87,"yds_per_rec":14.5,"long":25,"td":2},{"player":"Devin Duvernay","rec":2,"yds":26,"yds_per_rec":13.0,"long":24,"td":0},{"player":"Durham Smythe","rec":4,"yds":25,"yds_per_rec":6.2,"long":11,"td":0},{"player":"Caleb Williams","rec":2,"yds":22,"yds_per_rec":11.0,"long":20,"td":1},{"player":"Brittain Brown","rec":0,"yds":0,"yds_per_rec":null,"long":0,"td":0}],"tackles":[{"player":"Tremaine Edmunds","total":112,"solo":61,"assist":51,"sck":1.0,"forced_fmbl":0},{"player":"Jaquan Brisker","total":93,"solo":52,"assist":41,"sck":1.0,"forced_fmbl":0},{"player":"Kevin Byard","total":93,"solo":61,"assist":32,"sck":0.0,"forced_fmbl":0},{"player":"Nahshon Wright","total":80,"solo":54,"assist":26,"sck":0.0,"forced_fmbl":2},{"player":"T.J. Edwards","total":67,"solo":33,"assist":34,"sck":0.5,"forced_fmbl":0},{"player":"Noah Sewell","total":59,"solo":33,"assist":26,"sck":0.0,"forced_fmbl":1},{"player":"Montez Sweat","total":53,"solo":36,"assist":17,"sck":10.0,"forced_fmbl":3},{"player":"C.J. Gardner-Johnson","total":51,"solo":35,"assist":16,"sck":3.0,"forced_fmbl":1},{"player":"Tyrique Stevenson","total":49,"solo":36,"assist":13,"sck":0.0,"forced_fmbl":2},{"player":"Gervon Dexter Sr.","total":44,"solo":21,"assist":23,"sck":6.0,"forced_fmbl":0},{"player":"D'Marco Jackson","total":43,"solo":18,"assist":25,"sck":1.0,"forced_fmbl":0},{"player":"Grady Jarrett","total":39,"solo":14,"assist":25,"sck":1.5,"forced_fmbl":0},{"player":"Austin Booker","total":35,"solo":19,"assist":16,"sck":4.5,"forced_fmbl":1},{"player":"Andrew Billings","total":31,"solo":19,"assist":12,"sck":1.0,"forced_fmbl":0},{"player":"Nick McCloud","total":27,"solo":18,"assist":9,"sck":0.0,"forced_fmbl":0},{"player":"Daniel Hardy","total":22,"solo":7,"assist":15,"sck":0.0,"forced_fmbl":0},{"player":"Dayo Odeyingbo","total":21,"solo":9,"assist":12,"sck":1.0,"forced_fmbl":0},{"player":"Elijah Hicks","total":19,"solo":9,"assist":10,"sck":0.0,"forced_fmbl":0},{"player":"Jonathan Owens","total":19,"solo":9,"assist":10,"sck":0.0,"forced_fmbl":0}],"interceptions":[{"player":"Kevin Byard","int_caught":7,"yds":91,"yds_per_ret":13.0,"long":35,"tds":0},{"player":"Nahshon Wright","int_caught":5,"yds":118,"yds_per_ret":23.6,"long":74,"tds":1},{"player":"Tremaine Edmunds","int_caught":4,"yds":10,"yds_per_ret":2.5,"long":10,"tds":0},{"player":"C.J. Gardner-Johnson","int_caught":2,"yds":60,"yds_per_ret":30.0,"long":32,"tds":0},{"player":"Jaquan Brisker","int_caught":1,"yds":32,"yds_per_ret":32.0,"long":32,"tds":0},{"player":"T.J. Edwards","int_caught":1,"yds":34,"yds_per_ret":34.0,"long":34,"tds":1},{"player":"D'Marco Jackson","int_caught":1,"yds":0,"yds_per_ret":0.0,"long":0,"tds":0},{"player":"Jaylon Johnson","int_caught":1,"yds":0,"yds_per_ret":0.0,"long":0,"tds":0},{"player":"Tyrique Stevenson","int_caught":1,"yds":3,"yds_per_ret":3.0,"long":3,"tds":0}],"field_goals":[{"player":"Cairo Santos","fg_1_19":"0-0","fg_20_29":"3-3","fg_30_39":"8-9","fg_40_49":"10-12","fg_50_59":"4-6","fg_60_plus":"0-0"},{"player":"Jake Moody","fg_1_19":"0-0","fg_20_29":"2-2","fg_30_39":"3-3","fg_40_49":"3-4","fg_50_59":"0-0","fg_60_plus":"0-0"}],"kick_returns":[{"player":"Devin Duvernay","ret":40,"yds":1069,"yds_per_ret":26.7,"long":56,"td":0},{"player":"Josh Blackwell","ret":18,"yds":455,"yds_per_ret":25.3,"long":34,"td":0},{"player":"Luther Burden III","ret":8,"yds":223,"yds_per_ret":27.9,"long":44,"td":0},{"player":"Brittain Brown","ret":1,"yds":23,"yds_per_ret":23.0,"long":23,"td":0},{"player":"Roschon Johnson","ret":1,"yds":22,"yds_per_ret":22.0,"long":22,"td":0}],"punting":[{"player":"Tory Taylor","punts":60,"yds":2870,"long":69,"avg":47.8,"in_20":21,"net_avg":40.4}]};
+
+const $ = id => document.getElementById(id);
+const c = n => n == null ? '—' : Number.isInteger(n) ? n.toLocaleString() : n;
+const f1 = n => n == null ? '—' : n.toFixed(1);
+const pct = n => n == null ? '—' : n.toFixed(1) + '%';
+const bar = (v, mx) => `<div class="bar-c"><div class="bar-bg"><div class="bar-f" style="width:${Math.max(0,Math.round((v/mx)*100))}%"></div></div><span style="font-size:11px;color:var(--muted);min-width:36px;text-align:right">${c(v)}</span></div>`;
+const hbar = (name, val, max, sub) => `<div class="hbar"><div class="hb-top"><span class="hb-name">${name}</span><span class="hb-val">${sub}</span></div><div class="hb-track"><div class="hb-fill" style="width:${Math.round((Math.max(0,val)/max)*100)}%"></div></div></div>`;
+
+// Overview charts
+const rMax = D.rushing[0].yds;
+$('rushChart').innerHTML = D.rushing.filter(r=>r.yds>0).slice(0,7).map(r=>hbar(r.player,r.yds,rMax,`${c(r.yds)} yds · ${r.td} TD`)).join('');
+const rcMax = D.receiving[0].yds;
+$('recChart').innerHTML = D.receiving.filter(r=>r.yds>0).slice(0,7).map(r=>hbar(r.player,r.yds,rcMax,`${c(r.yds)} yds · ${r.td} TD`)).join('');
+const tMax = D.tackles[0].total;
+$('tackleChart').innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem">${D.tackles.slice(0,10).map(t=>hbar(t.player,t.total,tMax,`${t.total} tkl · ${t.sck} sck`)).join('')}</div>`;
+
+// Passing
+$('passTbl').innerHTML = D.passing.map(p=>`<tr>
+  <td class="pname">${p.player}</td>
+  <td class="r dim">${c(p.att)}</td><td class="r dim">${c(p.comp)}</td>
+  <td class="r hi">${c(p.yds)}</td><td class="r dim">${pct(p.comp_pct)}</td>
+  <td class="r dim">${f1(p.yds_per_att)}</td><td class="r hi">${p.td}</td>
+  <td class="r dim">${p.int_thrown}</td><td class="r dim">${p.sck}</td>
+  <td class="r dim">${f1(p.rate)}</td></tr>`).join('');
+
+// Rushing
+const ruMax = D.rushing[0].yds;
+$('rushTbl').innerHTML = D.rushing.map(r=>`<tr>
+  <td class="pname">${r.player}</td><td class="r dim">${r.att}</td>
+  <td class="r hi">${c(r.yds)}</td><td class="r dim">${f1(r.yds_per_att)}</td>
+  <td class="r dim">${r.long}</td><td class="r hi">${r.td}</td>
+  <td>${bar(Math.max(0,r.yds),ruMax)}</td></tr>`).join('');
+
+// Receiving
+const rvMax = D.receiving[0].yds;
+$('recTbl').innerHTML = D.receiving.filter(r=>r.rec>0).map(r=>`<tr>
+  <td class="pname">${r.player}</td><td class="r dim">${r.rec}</td>
+  <td class="r hi">${c(r.yds)}</td><td class="r dim">${r.yds_per_rec?f1(r.yds_per_rec):'—'}</td>
+  <td class="r dim">${r.long}</td><td class="r hi">${r.td}</td>
+  <td>${bar(r.yds,rvMax)}</td></tr>`).join('');
+
+// Tackles
+const tkMax = D.tackles[0].total;
+$('tackTbl').innerHTML = D.tackles.map(t=>`<tr>
+  <td class="pname">${t.player}</td><td class="r hi">${t.total}</td>
+  <td class="r dim">${t.solo}</td><td class="r dim">${t.assist}</td>
+  <td class="r dim">${t.sck}</td><td class="r dim">${t.forced_fmbl}</td>
+  <td>${bar(t.total,tkMax)}</td></tr>`).join('');
+
+// Interceptions
+$('intTbl').innerHTML = D.interceptions.map(i=>`<tr>
+  <td class="pname">${i.player}</td><td class="r hi">${i.int_caught}</td>
+  <td class="r dim">${i.yds}</td><td class="r dim">${f1(i.yds_per_ret)}</td>
+  <td class="r dim">${i.long}</td><td class="r dim">${i.tds}</td></tr>`).join('');
+
+// Field goals
+const fgRanges = [
+  {key:'fg_20_29',label:'20–29 yds'},
+  {key:'fg_30_39',label:'30–39 yds'},
+  {key:'fg_40_49',label:'40–49 yds'},
+  {key:'fg_50_59',label:'50–59 yds'},
+];
+$('fgTbl').innerHTML = D.field_goals.map(fg=>{
+  return fgRanges.map((r,i)=>{
+    const val = fg[r.key];
+    const [m,a] = val.split('-').map(Number);
+    const p2 = a===0?'—':`${Math.round((m/a)*100)}%`;
+    const isGood = a>0&&m===a;
+    return `<tr><td>${i===0?`<strong>${fg.player}</strong> — `:''} ${r.label}</td>
+      <td class="r ${isGood?'fg-good':'dim'}">${val}</td>
+      <td class="r dim">${p2}</td>
+      <td><div class="bar-c" style="min-width:70px"><div class="bar-bg"><div class="bar-f" style="width:${a===0?0:Math.round((m/a)*100)}%"></div></div></div></td></tr>`;
+  }).join('');
+}).join('<tr><td colspan="4" style="padding:6px 14px;background:#f9fafb;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;border-bottom:1px solid var(--border)"></td></tr>');
+
+// Kick returns
+const krMax = D.kick_returns[0].yds;
+$('krTbl').innerHTML = D.kick_returns.map(k=>`<tr>
+  <td class="pname">${k.player}</td><td class="r dim">${k.ret}</td>
+  <td class="r hi">${c(k.yds)}</td><td class="r dim">${f1(k.yds_per_ret)}</td>
+  <td class="r dim">${k.long}</td><td class="r dim">${k.td}</td></tr>`).join('');
+
+// Roster
+const positions = ['ALL', ...new Set(D.roster.map(p=>p.position))];
+$('posSelect').innerHTML = positions.map(pos=>`<option value="${pos}"${pos==='ALL'?' selected':''}>${pos==='ALL'?'All Players':pos}</option>`).join('');
+
+function filterPos(pos) {
+  renderRoster(pos);
+}
+
+function renderRoster(pos) {
+  const list = pos==='ALL' ? D.roster : D.roster.filter(p=>p.position===pos);
+  $('rosterGrid').innerHTML = list.map(p=>`
+    <div class="rcard">
+      <div class="rc-top">
+        <span class="rc-num">#${p.number||'—'}</span>
+        <span class="rc-pos">${p.position}</span>
+      </div>
+      <div class="rc-name">${p.name}</div>
+      <div class="rc-col">${p.college}</div>
+      <div class="rc-tags">
+        <span class="tag">${p.height}</span>
+        <span class="tag">${p.weight} lbs</span>
+        <span class="tag">Age ${p.age}</span>
+        <span class="tag">${p.experience} yr exp</span>
+      </div>
+    </div>`).join('');
+}
+renderRoster('ALL');
+
+// Tab switching
+function show(id, btn) {
+  document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  $(id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
